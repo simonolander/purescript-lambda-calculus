@@ -4,8 +4,8 @@ import Prelude
 
 import Effect (Effect)
 import Effect.Class.Console (log)
+import Test.Expression as Expression
 
 main :: Effect Unit
 main = do
-  log "🍝"
-  log "You should add some tests."
+  Expression.main
