@@ -1,0 +1,18 @@
+{
+  "name": "purescript-lambda-calculus",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:simonolander/purescript-lambda-calculus.git",
+  "author": "Simon Olander <simon.olander@r2m.se>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "purty src --write && purty test --write",
+    "test": "spago test",
+    "build": "spago build",
+    "suggest": "purs compile {src,test}/** --json-errors 2>&1 | jq"
+  },
+  "devDependencies": {
+    "purescript-suggest": "^2.2.0",
+    "purty": "^7.0.0"
+  }
+}
