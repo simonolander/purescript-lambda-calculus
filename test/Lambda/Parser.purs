@@ -4,7 +4,7 @@ import Prelude
 import Data.Either (Either(..))
 import Effect (Effect)
 import Lambda.Expression (Expression(..))
-import Lambda.Parser (term)
+import Lambda.Parser (parse)
 import Test.Unit (TestSuite, failure, success, suite, test)
 import Test.Unit.Assert (equal)
 import Test.Unit.Main (runTest)
@@ -13,14 +13,14 @@ import Text.Parsing.Parser (runParser)
 parseTest :: String -> Expression -> TestSuite
 parseTest input expected =
   test (show input) do
-    case runParser input term of
+    case parse input of
       Right actual -> equal expected actual
       Left err -> failure $ show err
 
 parseFail :: String -> TestSuite
 parseFail input =
   test (show input) do
-    case runParser input term of
+    case parse input of
       Right result -> failure $ "Expected error, got: " <> show result
       Left err -> success
 
