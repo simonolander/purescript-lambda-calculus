@@ -1,4 +1,4 @@
-module Lambda.Parser (term) where
+module Lambda.Parser (parse) where
 
 import Prelude hiding (between)
 import Control.Alt ((<|>))
@@ -8,6 +8,9 @@ import Text.Parsing.Parser (Parser)
 import Text.Parsing.Parser.Combinators (chainl1)
 import Text.Parsing.Parser.String (char, oneOf)
 import Text.Parsing.Parser.Token (GenLanguageDef(..), LanguageDef, TokenParser, alphaNum, letter, makeTokenParser)
+import Text.Parsing.Parser (runParser)
+import Text.Parsing.Parser (ParseError)
+import Data.Either (Either)
 
 clDef :: LanguageDef
 clDef =
@@ -64,3 +67,6 @@ term :: Parser String Expression
 term = do
   tokenParser.whiteSpace
   chainl1 nonApplication (pure Application)
+
+parse :: String -> Either ParseError Expression
+parse input = runParser input term
