@@ -3,33 +3,41 @@ module Lambda.Parser (parse) where
 import Prelude hiding (between)
 import Control.Alt ((<|>))
 import Control.Lazy (fix)
+import Data.Array (concat)
+import Data.Either (Either)
 import Lambda.Expression (Expression(..))
-import Text.Parsing.Parser (Parser)
+import Text.Parsing.Parser (ParseError, Parser, runParser)
 import Text.Parsing.Parser.Combinators (chainl1)
 import Text.Parsing.Parser.String (char, oneOf)
-import Text.Parsing.Parser.Token (GenLanguageDef(..), LanguageDef, TokenParser, alphaNum, letter, makeTokenParser)
-import Text.Parsing.Parser (runParser)
-import Text.Parsing.Parser (ParseError)
-import Data.Either (Either)
+import Text.Parsing.Parser.Token (GenLanguageDef(..), LanguageDef, TokenParser, makeTokenParser)
 
-clDef :: LanguageDef
-clDef =
+lowercaseChar :: Array Char
+lowercaseChar = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'å', 'ä', 'ö' ]
+
+uppercaseChar :: Array Char
+uppercaseChar = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä', 'Ö' ]
+
+digitChar :: Array Char
+digitChar = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
+
+languageDef :: LanguageDef
+languageDef =
   LanguageDef
     { commentStart: ""
     , commentEnd: ""
     , commentLine: ""
     , nestedComments: false
-    , identStart: letter
-    , identLetter: alphaNum
-    , opStart: oneOf [ '.', '\\' ]
-    , opLetter: oneOf [ '.', '\\' ]
-    , reservedNames: [ "lambda", "λ" ]
+    , identStart: oneOf lowercaseChar
+    , identLetter: oneOf $ concat [ lowercaseChar, digitChar ]
+    , opStart: oneOf [ '.', '^' ]
+    , opLetter: oneOf [ '.', '^' ]
+    , reservedNames: [ "L" ]
     , reservedOpNames: [ "." ]
     , caseSensitive: false
     }
 
 tokenParser :: TokenParser
-tokenParser = makeTokenParser clDef
+tokenParser = makeTokenParser languageDef
 
 dot :: Parser String Char
 dot = char '.'

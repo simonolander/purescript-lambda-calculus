@@ -8,7 +8,6 @@ import Lambda.Parser (parse)
 import Test.Unit (TestSuite, failure, success, suite, test)
 import Test.Unit.Assert (equal)
 import Test.Unit.Main (runTest)
-import Text.Parsing.Parser (runParser)
 
 parseTest :: String -> Expression -> TestSuite
 parseTest input expected =
@@ -65,6 +64,8 @@ main =
         parseTest "λx.λy.z" (Abstraction "x" (Abstraction "y" (Variable "z")))
         parseTest "λa.λb.λc.d" (Abstraction "a" (Abstraction "b" (Abstraction "c" (Variable "d"))))
         parseTest "λx.x z λy.x y" (Abstraction "x" (Application (Application (Variable "x") (Variable "z")) (Abstraction "y" (Application (Variable "x") (Variable "y")))))
+        parseTest "λa.λb.a b" (Abstraction "a" (Abstraction "b" (Application (Variable "a") (Variable "b"))))
+        parseTest "(λa.λb.a b)" (Abstraction "a" (Abstraction "b" (Application (Variable "a") (Variable "b"))))
       suite "Syntax error" do
         parseFail ""
         parseFail "."
@@ -79,6 +80,5 @@ main =
         parseFail "λ.x"
         parseFail "λλ.x"
         parseFail "λ λ.x"
-
---        parseFail "λλx.x"
---        parseFail "λ λx.x"
+        parseFail "λλx.x"
+        parseFail "λ λx.x"
