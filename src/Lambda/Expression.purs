@@ -22,6 +22,21 @@ instance eqExpression :: Eq Expression where
 instance showExpression :: Show Expression where
   show a = genericShow a
 
+isVariable :: Expression -> Boolean
+isVariable (Variable _) = true
+
+isVariable _ = false
+
+isApplication :: Expression -> Boolean
+isApplication (Application _ _) = true
+
+isApplication _ = false
+
+isAbstraction :: Expression -> Boolean
+isAbstraction (Abstraction _ _) = true
+
+isAbstraction _ = false
+
 inUse :: VarName -> Expression -> Boolean
 inUse variable expression = case expression of
   Variable i -> i == variable
