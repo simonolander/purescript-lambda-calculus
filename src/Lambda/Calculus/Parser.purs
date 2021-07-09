@@ -27,11 +27,11 @@ languageDef =
     , commentEnd: ""
     , commentLine: ""
     , nestedComments: false
-    , identStart: oneOf lowercaseChar
-    , identLetter: oneOf $ concat [ lowercaseChar, digitChar ]
-    , opStart: oneOf [ '.', '^' ]
-    , opLetter: oneOf [ '.', '^' ]
-    , reservedNames: [ "L" ]
+    , identStart: oneOf $ concat [lowercaseChar, uppercaseChar]
+    , identLetter: oneOf $ concat [ lowercaseChar, digitChar, uppercaseChar ]
+    , opStart: oneOf [ '.', '^', '\\']
+    , opLetter: oneOf [ '.', '^', '\\']
+    , reservedNames: []
     , reservedOpNames: [ "." ]
     , caseSensitive: false
     }
@@ -47,14 +47,8 @@ variable = do
   id <- tokenParser.identifier
   pure $ Variable id
 
-application :: Parser String Expression -> Parser String Expression
-application parser = do
-  fun <- parser
-  arg <- parser
-  pure $ Application fun arg
-
 lambda :: Parser String String
-lambda = tokenParser.symbol "λ"
+lambda = tokenParser.symbol "λ" <|> tokenParser.symbol "\\"
 
 nonApplication :: Parser String Expression
 nonApplication =
