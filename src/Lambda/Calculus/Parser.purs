@@ -1,11 +1,11 @@
-module Lambda.Parser (parse) where
+module Lambda.Calculus.Parser (parse) where
 
 import Prelude hiding (between)
 import Control.Alt ((<|>))
 import Control.Lazy (fix)
 import Data.Array (concat)
 import Data.Either (Either)
-import Lambda.Expression (Expression(..))
+import Lambda.Calculus.Expression (Expression(..))
 import Text.Parsing.Parser (ParseError, Parser, runParser)
 import Text.Parsing.Parser.Combinators (chainl1)
 import Text.Parsing.Parser.String (char, oneOf)

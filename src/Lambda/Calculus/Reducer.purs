@@ -1,4 +1,4 @@
-module Lambda.Reducer where
+module Lambda.Calculus.Reducer where
 
 import Prelude
 import Data.Array as Array
@@ -11,7 +11,7 @@ import Data.Set (Set)
 import Data.Set as Set
 import Data.String (CodePoint)
 import Data.String as String
-import Lambda.Expression (Expression(..), VarName, isAbstraction)
+import Lambda.Calculus.Expression (Expression(..), VarName, isAbstraction)
 
 --| A list of all variables in order
 allVariables :: LL.List String

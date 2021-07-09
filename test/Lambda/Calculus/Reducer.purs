@@ -1,4 +1,4 @@
-module Test.Lambda.Reducer where
+module Test.Lambda.Calculus.Reducer where
 
 import Prelude
 import Data.Array (fromFoldable)
@@ -9,9 +9,9 @@ import Data.Set as Set
 import Data.String (Pattern(..))
 import Data.String as String
 import Effect (Effect)
-import Lambda.Expression (Expression)
-import Lambda.Parser (parse)
-import Lambda.Reducer (allVariables, betaReduce, etaReduce, freeVars, isFree, newVar, nextVar, redex, reduce, reduceStep)
+import Lambda.Calculus.Expression (Expression)
+import Lambda.Calculus.Parser (parse)
+import Lambda.Calculus.Reducer (allVariables, betaReduce, etaReduce, freeVars, isFree, newVar, nextVar, redex, reduce, reduceStep)
 import Test.Unit (Test, TestSuite, failure, suite, test, timeout)
 import Test.Unit.Assert (equal)
 import Test.Unit.Main (runTest)

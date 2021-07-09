@@ -1,4 +1,4 @@
-module Main where
+module Lambda.Calculus.Main where
 
 import Prelude
 import Effect (Effect)

@@ -1,10 +1,10 @@
-module Test.Lambda.Printer where
+module Test.Lambda.Calculus.Printer where
 
 import Prelude
 import Data.Either (Either(..))
 import Effect (Effect)
-import Lambda.Parser (parse)
-import Lambda.Printer (print)
+import Lambda.Calculus.Parser (parse)
+import Lambda.Calculus.Printer (print)
 import Test.Unit (TestSuite, failure, suite, test)
 import Test.Unit.Assert (equal)
 import Test.Unit.Main (runTest)

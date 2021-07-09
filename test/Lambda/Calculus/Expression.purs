@@ -1,9 +1,9 @@
-module Test.Lambda.Expression where
+module Test.Lambda.Calculus.Expression where
 
 import Prelude
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
-import Lambda.Expression (Expression(..), alphaConvert, betaReduce)
+import Lambda.Calculus.Expression (Expression(..), alphaConvert, betaReduce)
 import Test.Unit (TestSuite, suite, test)
 import Test.Unit.Assert (equal)
 import Test.Unit.Main (runTest)

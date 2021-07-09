@@ -1,10 +1,10 @@
-module Test.Lambda.Parser where
+module Test.Lambda.Calculus.Parser where
 
 import Prelude
 import Data.Either (Either(..))
 import Effect (Effect)
-import Lambda.Expression (Expression(..))
-import Lambda.Parser (parse)
+import Lambda.Calculus.Expression (Expression(..))
+import Lambda.Calculus.Parser (parse)
 import Test.Unit (TestSuite, failure, success, suite, test)
 import Test.Unit.Assert (equal)
 import Test.Unit.Main (runTest)

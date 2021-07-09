@@ -1,7 +1,7 @@
-module Lambda.Printer where
+module Lambda.Calculus.Printer where
 
 import Prelude
-import Lambda.Expression (Expression(..))
+import Lambda.Calculus.Expression (Expression(..))
 
 print :: Expression -> String
 print = case _ of

@@ -1,4 +1,4 @@
-module Lambda.Expression where
+module Lambda.Calculus.Expression where
 
 import Prelude
 import Data.Eq.Generic (genericEq)
