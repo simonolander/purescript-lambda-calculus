@@ -21,7 +21,7 @@ parseFail input =
   test (show input) do
     case parse input of
       Right result -> failure $ "Expected error, got: " <> show result
-      Left err -> success
+      Left _ -> success
 
 main :: Effect Unit
 main =
@@ -30,6 +30,8 @@ main =
       suite "Variables" do
         parseTest "x" (Variable "x")
         parseTest "bar" (Variable "bar")
+        parseTest "Bar" (Variable "Bar")
+        parseTest "ABC123" (Variable "ABC123")
       suite "Spaces" do
         parseTest " x" (Variable "x")
         parseTest "x " (Variable "x")
@@ -58,14 +60,18 @@ main =
         parseTest "(λx.x z) λy.w λw.w x y z" (Application (Abstraction "x" (Application (Variable "x") (Variable "z"))) (Abstraction "y" (Application (Variable "w") (Abstraction "w" (Application (Application (Application (Variable "w") (Variable "x")) (Variable "y")) (Variable "z"))))))
       suite "Abstractions" do
         parseTest "λx.x" (Abstraction "x" (Variable "x"))
+        parseTest "\\x.x" (Abstraction "x" (Variable "x"))
         parseTest "λfoo.bar" (Abstraction "foo" (Variable "bar"))
         parseTest "λx.x y" (Abstraction "x" (Application (Variable "x") (Variable "y")))
         parseTest "λx.(y z)" (Abstraction "x" (Application (Variable "y") (Variable "z")))
         parseTest "λx.λy.z" (Abstraction "x" (Abstraction "y" (Variable "z")))
         parseTest "λa.λb.λc.d" (Abstraction "a" (Abstraction "b" (Abstraction "c" (Variable "d"))))
+        parseTest "\\a.\\b.\\c.d" (Abstraction "a" (Abstraction "b" (Abstraction "c" (Variable "d"))))
         parseTest "λx.x z λy.x y" (Abstraction "x" (Application (Application (Variable "x") (Variable "z")) (Abstraction "y" (Application (Variable "x") (Variable "y")))))
+        parseTest "λx.x z \\y.x y" (Abstraction "x" (Application (Application (Variable "x") (Variable "z")) (Abstraction "y" (Application (Variable "x") (Variable "y")))))
         parseTest "λa.λb.a b" (Abstraction "a" (Abstraction "b" (Application (Variable "a") (Variable "b"))))
         parseTest "(λa.λb.a b)" (Abstraction "a" (Abstraction "b" (Application (Variable "a") (Variable "b"))))
+        parseTest "(\\a.λb.a b)" (Abstraction "a" (Abstraction "b" (Application (Variable "a") (Variable "b"))))
       suite "Syntax error" do
         parseFail ""
         parseFail "."
@@ -82,3 +88,5 @@ main =
         parseFail "λ λ.x"
         parseFail "λλx.x"
         parseFail "λ λx.x"
+        parseFail "0"
+        parseFail "0abc"
